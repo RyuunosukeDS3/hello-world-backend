@@ -55,7 +55,7 @@ jobs:
           path: dist/
 
   docker:
-    runs-on: ubuntu-latest
+    runs-on: nestjs/cli
     needs: build
     steps:
       - uses: actions/checkout@v3
