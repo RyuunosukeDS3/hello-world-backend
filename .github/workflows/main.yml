@@ -45,6 +45,14 @@ jobs:
         with:
           node-version: 22
 
+      - name: Restore node_modules cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
       - name: Build project
         run: npm run build
 
@@ -87,16 +95,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
       - name: Download dist
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Restore node_modules cache
+        uses: actions/cache@v3
         with:
-          node-version: 22
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
 
       - name: Run unit tests with coverage
         run: npm run test:cov
