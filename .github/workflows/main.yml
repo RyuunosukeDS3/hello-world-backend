@@ -141,12 +141,16 @@ jobs:
 
       - name: Run Trivy vulnerability scanner in fs mode
         uses: aquasecurity/trivy-action@0.28.0
+        run: trivy plugin install github.com/umax/trivy-plugin-sonarqube
         with:
           scan-type: 'fs'
           scan-ref: '.'
           format: 'json'
           exit-code: '1'
           ignore-unfixed: true
+        output: trivy.json
+        run: trivy sonarqube trivy.json > sonarqube.json
+
 
   trivy-image:
     name: Trivy Image Scan
@@ -162,16 +166,19 @@ jobs:
           path: ./image.tar
 
       - name: Load docker image
-        run: docker load image.tar
+        run: docker load < image.tar
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
+        run: trivy plugin install github.com/umax/trivy-plugin-sonarqube
         with:
           image-ref: 'hello-world-backend:latest'
           format: 'json'
           exit-code: '1'
           ignore-unfixed: true
           scan-type: 'image'
+          output: trivy.json
+        run: trivy sonarqube trivy.json > sonarqube.json
 
   sonar:
     name: SonarCloud Analysis
