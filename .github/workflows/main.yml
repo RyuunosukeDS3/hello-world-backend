@@ -229,7 +229,8 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.projectKey=ryuunosukeds3-hello-world-backend
+            -Dsonar.projectKey=hello-world-backend
+            -Dsonar.organization=ryuunosukeds3
             -Dsonar.sources=src
             -Dsonar.tests=test
             -Dsonar.test.inclusions=**/*.spec.ts
