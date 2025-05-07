@@ -187,7 +187,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test, trivy-fs, trivy-image]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
 
       - name: Download unit test coverage
         uses: actions/download-artifact@v4
@@ -198,8 +200,8 @@ jobs:
       - name: Download e2e test coverage
         uses: actions/download-artifact@v4
         with:
-          name: trivy-image.json
-          path: .
+          name: e2e-coverage
+          path: coverage-e2e/
 
       - name: Upload trivy-fs.json
         uses: actions/download-artifact@v4
@@ -210,32 +212,10 @@ jobs:
       - name: Upload trivy-image.json
         uses: actions/download-artifact@v4
         with:
-          name: e2e-coverage
-          path: coverage-e2e/
+          name: trivy-image.json
+          path: .
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          projectBaseDir: .
-          args: >
-            -Dsonar.projectKey=hello-world-backend
-            -Dsonar.organization=ryuunosukeds3
-            -Dsonar.sources=src
-            -Dsonar.tests=test
-            -Dsonar.test.inclusions=**/*.spec.ts
-            -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info,coverage-e2e/lcov.info
-            -Dsonar.externalIssuesReportPaths=trivy-fs.json,trivy-image.json
-            -Dsonar.host.url=https://sonarcloud.io
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
