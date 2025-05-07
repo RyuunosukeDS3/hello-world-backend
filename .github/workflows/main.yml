@@ -232,7 +232,7 @@ jobs:
             -Dsonar.projectKey=your_project_key
             -Dsonar.organization=your_org
             -Dsonar.sources=src
-            -Dsonar.tests=src,e2e
+            -Dsonar.tests=test
             -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info,coverage-e2e/lcov.info
             -Dsonar.externalIssuesReportPaths=trivy-fs.json,trivy-image.json
