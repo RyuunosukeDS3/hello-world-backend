@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: image.tar
-          path: ./image.tar
+          path: .
 
   test:
     name: Run Tests (Unit + E2E)
@@ -151,7 +151,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: trivy-fs.json
-          path: ./trivy-fs.json
+          path: .
 
   trivy-image:
     name: Trivy Image Scan
@@ -164,7 +164,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: image.tar
-          path: ./image.tar
+          path: .
 
       - name: Load docker image
         run: docker load -i image.tar
@@ -180,7 +180,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: trivy-image.json
-          path: ./trivy-image.json
+          path: .
 
   sonar:
     name: SonarCloud Analysis
@@ -199,13 +199,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: trivy-image.json
-          path: ./trivy-image.json
+          path: .
 
       - name: Upload trivy-fs.json
         uses: actions/download-artifact@v4
         with:
           name: trivy-fs.json
-          path: ./trivy-fs.json
+          path: .
 
       - name: Upload trivy-image.json
         uses: actions/download-artifact@v4
