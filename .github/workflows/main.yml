@@ -121,7 +121,7 @@ jobs:
       - name: Upload unit test coverage
         uses: actions/upload-artifact@v4
         with:
-          name: unit-coverage
+          name: coverage
           path: coverage/
 
       - name: Run e2e tests with coverage
@@ -130,7 +130,7 @@ jobs:
       - name: Upload e2e test coverage
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-coverage
+          name: coverage-e2e
           path: coverage-e2e/
 
   trivy-fs:
@@ -194,28 +194,31 @@ jobs:
       - name: Download unit test coverage
         uses: actions/download-artifact@v4
         with:
-          name: unit-coverage
+          name: coverage
           path: coverage/
 
       - name: Download e2e test coverage
         uses: actions/download-artifact@v4
         with:
-          name: e2e-coverage
+          name: coverage-e2e
           path: coverage-e2e/
 
       - name: Upload trivy-fs.json
         uses: actions/download-artifact@v4
         with:
           name: trivy-fs.json
-          path: .
+          path: trivy/
 
       - name: Upload trivy-image.json
         uses: actions/download-artifact@v4
         with:
           name: trivy-image.json
-          path: .
+          path: trivy/
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
+        with:
+          args: >
+            -Dsonar.externalIssuesReportPaths=trivy/trivy-fs.json,trivy/trivy-image.json
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -8,9 +8,7 @@
   <a href="https://github.com/your-org/hello-world-backend/actions/workflows/main.yml">
     <img src="https://github.com/ryuunosukeds3/hello-world-backend/actions/workflows/main.yml/badge.svg" alt="CI Status" />
   </a>
-  <a href="https://sonarcloud.io/project/your_project_key">
-    <img src="https://sonarcloud.io/api/project_badges/measure?project=hello-world-backend&metric=alert_status" alt="Quality Gate" />
-  </a>
+  [![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=hello-world-backend)
   <a href="https://hub.docker.com/r/your-org/hello-world-backend">
     <img src="https://img.shields.io/docker/pulls/your-org/hello-world-backend" alt="Docker Pulls" />
   </a>

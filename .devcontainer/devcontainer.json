@@ -14,7 +14,7 @@
 		"ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
             "plugins": "git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting",
             "omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions https://github.com/zsh-users/zsh-syntax-highlighting https://github.com/zdharma-continuum/fast-syntax-highlighting"
-          }
+        }
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -30,7 +30,12 @@
 		  "settings": {
 			"terminal.integrated.defaultProfile.linux": "zsh",
 			"editor.defaultFormatter": "esbenp.prettier-vscode",
-			"cSpell.enabled": true
+			"cSpell.enabled": true,
+			"sonarlint.connectedMode.connections.sonarcloud": [
+				{
+					"organizationKey": "ryuunosukeds3"
+				}
+			]
 		  },
 	
 		  // Add the IDs of extensions you want installed when the container is created.
@@ -47,10 +52,10 @@
 	// "remoteUser": "root"
 
 	"mounts": [
-    {
-      "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.czrc",
-      "target": "/home/node/.czrc",
-      "type": "bind"
-    }
-  ]
+		{
+		"source": "${localEnv:HOME}${localEnv:USERPROFILE}/.czrc",
+		"target": "/home/node/.czrc",
+		"type": "bind"
+		}
+	]
 }
