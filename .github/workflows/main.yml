@@ -7,9 +7,8 @@ on:
     branches: [main]
 
 jobs:
-
   lint:
-    name: Lint Code
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,12 +28,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn
-        
+
       - name: Run linter
         run: npm run lint
 
   build:
-    name: Build App
+    name: Build
     runs-on: ubuntu-latest
     needs: lint
     steps:
@@ -90,7 +89,7 @@ jobs:
           path: .
 
   test:
-    name: Run Tests (Unit + E2E)
+    name: Unit Test
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -124,6 +123,32 @@ jobs:
           name: coverage
           path: coverage/
 
+  test-e2e:
+    name: Test e2e
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Restore node_modules cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
       - name: Run e2e tests with coverage
         run: npm run test:e2e:cov
 
@@ -134,7 +159,7 @@ jobs:
           path: coverage-e2e/
 
   trivy-fs:
-    name: Trivy FS Scan (Source Code)
+    name: Trivy Scan
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -164,7 +189,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: image.tar
-          path: image.tar
+          path: .
 
       - name: Load docker image
         run: docker load -i image.tar
@@ -185,11 +210,11 @@ jobs:
   sonar:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
-    needs: [test, trivy-fs, trivy-image]
+    needs: [test, teste-e2e, trivy-fs, trivy-image]
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
       - name: Download unit test coverage
         uses: actions/download-artifact@v4
