@@ -228,6 +228,12 @@ jobs:
           name: coverage-e2e
           path: coverage/coverage-e2e/
 
+      - name: Install lcov-result-merger
+        run: npm install -g lcov-result-merger
+
+      - name: Merge coverage reports
+        run: lcov-result-merger 'coverage/*/lcov.info' > coverage/lcov.info
+
       - name: Download trivy-fs.json
         uses: actions/download-artifact@v4
         with:
