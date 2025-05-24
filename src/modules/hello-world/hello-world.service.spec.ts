@@ -20,8 +20,8 @@ describe('HelloWorldService', () => {
     it('should return an object with hello message', () => {
       const result = service.helloDevs();
       expect(result).toEqual({ hello: 'Hello Devs!' });
-      expect(result.hello).toBe('Hello Devs!');
-      expect(typeof result.hello).toBe('string');
+      expect(result.message).toBe('Hello Devs!');
+      expect(typeof result.message).toBe('string');
     });
   });
 });
