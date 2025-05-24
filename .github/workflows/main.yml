@@ -220,13 +220,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: coverage
-          path: coverage/
+          path: coverage/coverage/
 
       - name: Download e2e test coverage
         uses: actions/download-artifact@v4
         with:
           name: coverage-e2e
-          path: coverage-e2e/
+          path: coverage/coverage-e2e/
 
       - name: Download trivy-fs.json
         uses: actions/download-artifact@v4
