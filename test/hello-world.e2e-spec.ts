@@ -23,10 +23,10 @@ describe('HelloWorldController (e2e)', () => {
     await app.close();
   });
 
-  it('/hello (GET) returns { hello: "Hello Devs!" }', async () => {
+  it('/hello (GET) returns { message: "Hello Devs!" }', async () => {
     await request(server)
       .get('/hello')
       .expect(200)
-      .expect({ hello: 'Hello Devs!' });
+      .expect({ message: 'Hello Devs!' });
   });
 });

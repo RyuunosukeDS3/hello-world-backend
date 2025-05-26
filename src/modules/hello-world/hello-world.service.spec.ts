@@ -19,7 +19,7 @@ describe('HelloWorldService', () => {
   describe('helloDevs', () => {
     it('should return an object with hello message', () => {
       const result = service.helloDevs();
-      expect(result).toEqual({ hello: 'Hello Devs!' });
+      expect(result).toEqual({ message: 'Hello Devs!' });
       expect(result.message).toBe('Hello Devs!');
       expect(typeof result.message).toBe('string');
     });
