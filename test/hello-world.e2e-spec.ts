@@ -29,4 +29,17 @@ describe('HelloWorldController (e2e)', () => {
       .expect(200)
       .expect({ message: 'Hello Devs!' });
   });
+
+  it('/theme (GET) returns { theme: "light" }', async () => {
+    await request(server).get('/theme').expect(200).expect({ theme: 'light' });
+  });
+
+  it('/workshop/devsecops (GET) returns md file', async () => {
+    const response = await request(app.getHttpServer() as import('http').Server)
+      .get('/workshop/devsecops')
+      .expect(200);
+    expect(response.text).toContain(
+      '# 🛡️ Workshop: Introdução ao DevSecOps para Iniciantes',
+    );
+  });
 });
